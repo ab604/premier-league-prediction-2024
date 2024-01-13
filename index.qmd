@@ -40,14 +40,15 @@ preds_long <-  tibble(match = c(rep(1:18,2),1:19,1:18),
 
 plt_2024 <- preds_long |> 
   ggplot(aes(x = match, y = pred_wins, colour = club)) +
-  geom_point(size = 5, shape = 20, position = position_jitter(width = 0.2), alpha = 0.5) + 
+  geom_point(size = 5, shape = 20, position = position_jitter(width = 0.1), alpha = 0.5) + 
   scale_colour_manual(values = c("#EF0107","#670E36","#C8102E","lightblue")) +
   scale_y_continuous(labels = label_percent()) +
   scale_x_continuous(breaks = seq(1,19,1)) + 
   xlab("Matches") + 
   ylab("Chance") +
-  theme_minimal() +
-  theme(legend.title = element_blank(),legend.position = "bottom") +
+  theme_classic() +
+  theme(legend.title = element_blank(),legend.position = "bottom",
+        panel.grid.major.x = element_line()) +
   ggtitle("Predicted wins from remaining Premier League matches")
 
 plt_draws <- preds_long |> 
@@ -58,8 +59,9 @@ plt_draws <- preds_long |>
   scale_x_continuous(breaks = seq(1,19,1)) + 
   xlab("Matches") + 
   ylab("Chance") +
-  theme_minimal() +
-  theme(legend.title = element_blank(), legend.position = "bottom") +
+  theme_classic() +
+  theme(legend.title = element_blank(),legend.position = "bottom",
+        panel.grid.major.x = element_line()) +
   ggtitle("Predicted draws from remaining Premier League matches")
 
 
@@ -158,8 +160,9 @@ plt_mean <- mc_long |>
   scale_x_continuous(breaks = seq(1,19,1)) +
   xlab("Matches") +
   ylab("Chance") +
-  theme_minimal() +
-  theme(legend.title = element_blank(), legend.position = "bottom") +
+  theme_classic() +
+  theme(legend.title = element_blank(),legend.position = "bottom",
+        panel.grid.major.x = element_line()) +
   ggtitle("Predicted wins from remaining Premier League matches\nif form regresses to mean.")
 
 plt_mean_dr <- mc_long |>
@@ -170,8 +173,9 @@ plt_mean_dr <- mc_long |>
   scale_x_continuous(breaks = seq(1,19,1)) +
   xlab("Matches") +
   ylab("Chance") +
-  theme_minimal() +
-  theme(legend.title = element_blank(), legend.position = "bottom") +
+  theme_classic() +
+  theme(legend.title = element_blank(),legend.position = "bottom",
+        panel.grid.major.x = element_line()) +
   ggtitle("Predicted draws from remaining Premier League matches\nif form regresses to mean.")
 
 
