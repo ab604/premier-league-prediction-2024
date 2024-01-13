@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website: 
+  navbar:
+    title: "Premier League 2023/23 Predictions"
+    search: false
+
+format:
+  html:
+    author: "Alistair Bailey"
+    date: last-modified
+    date-format: "[Last Updated on] YYYY-MM-DD"
+    link-external-icon: true
+    link-external-newwindow: true
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [cosmo, dark.scss]
+    # Table of contents and section numbering
+    toc: true
+    number-sections: false
+
+      
+# Don't show the code in the output
+execute: 
+  echo: false
+
+
