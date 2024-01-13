@@ -40,15 +40,28 @@ preds_long <-  tibble(match = c(rep(1:18,2),1:19,1:18),
 
 plt_2024 <- preds_long |> 
   ggplot(aes(x = match, y = pred_wins, colour = club)) +
-  geom_point(size = 3, shape = 20, position = position_jitter(width = 0.25), alpha = 0.3) + 
+  geom_point(size = 5, shape = 20, position = position_jitter(width = 0.2), alpha = 0.5) + 
   scale_colour_manual(values = c("#EF0107","#670E36","#C8102E","lightblue")) +
   scale_y_continuous(labels = label_percent()) +
   scale_x_continuous(breaks = seq(1,19,1)) + 
   xlab("Matches") + 
   ylab("Chance") +
   theme_minimal() +
-  theme(legend.title = element_blank()) +
+  theme(legend.title = element_blank(),legend.position = "bottom") +
   ggtitle("Predicted wins from remaining Premier League matches")
+
+plt_draws <- preds_long |> 
+  ggplot(aes(x = match, y = pred_draws, colour = club)) +
+  geom_point(size = 5, shape = 20, alpha = 0.6) + 
+  scale_colour_manual(values = c("#EF0107","#670E36","#C8102E","lightblue")) +
+  scale_y_continuous(labels = label_percent()) +
+  scale_x_continuous(breaks = seq(1,19,1)) + 
+  xlab("Matches") + 
+  ylab("Chance") +
+  theme_minimal() +
+  theme(legend.title = element_blank(), legend.position = "bottom") +
+  ggtitle("Predicted draws from remaining Premier League matches")
+
 
 t4_tbl <- top_four |> mutate(pred_wins = t4_pred_wins,
              pred_draws = t4_pred_draws,
@@ -116,17 +129,30 @@ mc_long <-  tibble(match = c(1:19,1:18),
                 pred_wins = unlist(mc_wins),
                 pred_draws = unlist(mc_draws))
 
-# plt_mean <- mc_long |> 
-#   ggplot(aes(x = match, y = pred_wins, colour = club)) +
-#   geom_point(size = 3, shape = 20, position = position_jitter(width = 0.25), alpha = 0.5) + 
-#   scale_colour_manual(values = c("#C8102E","lightblue")) +
-#   scale_y_continuous(labels = label_percent()) +
-#   scale_x_continuous(breaks = seq(1,19,1)) + 
-#   xlab("Matches") + 
-#   ylab("Chance") +
-#   theme_minimal() +
-#   theme(legend.title = element_blank()) +
-#   ggtitle("Predicted wins from remaining Premier League matches")
+plt_mean <- mc_long |>
+  ggplot(aes(x = match, y = pred_wins, colour = club)) +
+  geom_point(size = 5, shape = 20) +
+  scale_colour_manual(values = c("#C8102E","lightblue")) +
+  scale_y_continuous(labels = label_percent()) +
+  scale_x_continuous(breaks = seq(1,19,1)) +
+  xlab("Matches") +
+  ylab("Chance") +
+  theme_minimal() +
+  theme(legend.title = element_blank(), legend.position = "bottom") +
+  ggtitle("Predicted wins from remaining Premier League matches\nif form regresses to mean.")
+
+plt_mean_dr <- mc_long |>
+  ggplot(aes(x = match, y = pred_draws, colour = club)) +
+  geom_point(size = 5, shape = 20) +
+  scale_colour_manual(values = c("#C8102E","lightblue")) +
+  scale_y_continuous(labels = label_percent()) +
+  scale_x_continuous(breaks = seq(1,19,1)) +
+  xlab("Matches") +
+  ylab("Chance") +
+  theme_minimal() +
+  theme(legend.title = element_blank(), legend.position = "bottom") +
+  ggtitle("Predicted draws from remaining Premier League matches\nif form regresses to mean.")
+
 
 tbl_mc_2024 <- mc_liv |> mutate(pred_wins = pred_mc_wins,
              pred_draws = pred_mc_draws,
@@ -146,17 +172,21 @@ Just for fun, I wondered how a binomial model would compete with more sophistica
 
 @sec-the-model has the details, but if the top four hold their form, then a binomial model predicts Liverpool to win the league as shown in @tbl-2024.
 
-In the current season Manchester City with a 63% rate are performing well below their win rate of `r round(100*(174/228),0)`% and draw rate of `r round(100*(25/228),0)`% in the last six seasons.
+In the current season Manchester City with 63% and 16% win and draw rates respectively are performing well below average of a win rate of `r round(100*(174/228),0)`% and draw rate of `r round(100*(25/228),0)`% in the last six seasons.
 
-Meanwhile Liverpool have a win rate of `r round(100*(150/228),0)`% and draw rate of `r round(100*(49/228),0)`% over the same period which is close their current 65% win rate.
+Meanwhile Liverpool have a win rate of `r round(100*(150/228),0)`% and draw rate of `r round(100*(49/228),0)`% over the same period, close their current 65% win rate. Their draw rate for the current season is above average at 30%
 
-Assuming there is regression to the mean, I also calculated @tbl-2024-mean for their six season mean win rates for Manchester City and Liverpool for the remaining matches. In this scenario Manchester City beat Liverpool by two points. 
+Assuming there is regression to the mean, I also calculated @tbl-2024-mean for their six season mean win rates for Manchester City and Liverpool for the remaining matches. In this scenario Manchester City beat Liverpool by two points.
 
-Either way, it would be a surprise if Aston Villa won the league. And an even bigger one if Arsenal somehow won.
+I don't expect these models to stand up well, but they show how fine the margins are. A regression to the mean in draw rate for Liverpool corresponding with a corresponding change for Manchester City is enough to change the outcome.  
+
+It would be a surprise if Aston Villa won the league, an even bigger one if Arsenal somehow won.
+
+Such are the margins, it would also be surprising if any team ran away with the title, so it should be an exciting second half to the season whatever happens. 
 
 ```{r}
 #| label: tbl-2024
-#| tbl-cap: Final predictions for 2023/24 season based on form from first half of the season.
+#| tbl-cap: Final predictions for 2023/24 season using form from first half of the season.
 t4_tbl |> select(Club = club, Matches = matches,
                    "Pred. Wins" = pred_wins, "Pred. Draws" = pred_draws, "Pred. Losses" = pred_loss,
                    "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
@@ -174,17 +204,51 @@ tbl_mc_2024 |> select(Club = club, Matches = matches,
 
 ## The model {#sec-the-model}
 
-I got data for the 2022/23 and 2023/24 seasons from [Footystats](https://footystats.org/england/premier-league#)
+I got data for the 2023/24 seasons from [Footystats](https://footystats.org/england/premier-league#), and from Wikipedia
+for [Liverpool's seasons](https://en.wikipedia.org/wiki/List_of_Liverpool_F.C._seasons) and [Manchester City's seasons](https://en.wikipedia.org/wiki/List_of_Manchester_City_F.C._seasons).
+
+@tbl-prem-league-2024 shows the statistics for the top four positions on the 2nd of January 2024.
 
 ```{r}
 #| label: tbl-prem-league-2024
-#| tbl-cap: Statistics for top four teams in 2023/24 season on January 10th 2024
+#| tbl-cap: Statistics for top four teams in 2023/24 season on January 2nd 2024
 top_four |> kable(digits = 3) |> kable_styling("striped")
 ```
 
+I used the win and draw percentages for each team and
+their number of remaining matches to generate binomial distributions of the probability
+of the total number of wins or draws. In the form `dbinom(1:x,x,y)` where `x` is the number of matches and `y` is the probability of winning or drawing. 
+
+@fig-pred-wins-2024 shows the distribution for wins and @fig-pred-draws-2024 shows
+the distribution for the draws.
+
+For a point prediction, I then used the maximum probabilities for wins and draws 
+to calculate the points accrued and subsequent points total for each team for @tbl-2024.
 
 ```{r}
-#| label: fig-2024
-#| fig-cap: Binomial model of wins for remaining matches based on form from first half of the season
+#| label: fig-pred-wins-2024
+#| fig-cap: Binomial distribution of wins for remaining matches based on form from first half of the season for the top four teams.
 plt_2024
 ```
+
+```{r}
+#| label: fig-pred-draws-2024
+#| fig-cap: Binomial distribution of draws for remaining matches based on form from first half of the season for the top four teams.
+plt_draws
+```
+
+I repeated this using the six year win and draw averages for Manchester City and Liverpool which 
+yields @fig-pred-wins-mean and @fig-pred-draws-mean respectively. And @tbl-2024-mean.
+
+```{r}
+#| label: fig-pred-wins-mean
+#| fig-cap: Binomial distribution of wins for remaining matches based on a regression to mean form for Liverpool and Manchester City.
+plt_mean
+```
+
+```{r}
+#| label: fig-pred-draws-mean
+#| fig-cap: Binomial distribution of draws for remaining matches based on a regression to mean form for Liverpool and Manchester City.
+plt_mean_dr
+```
+

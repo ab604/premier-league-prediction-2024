@@ -148,15 +148,17 @@ ul.task-list li input[type="checkbox"] {
 <p>I’d previously read Oliver Johnson’s Substack on <a href="https://bristoliver.substack.com/p/the-edge-is-everything">New Year’s resolutions</a> which included a binomial model of Ronny O’Sullivan’s frame win and match win rate.</p>
 <p>Just for fun, I wondered how a binomial model would compete with more sophisticated models for predicting the outcome of the second half of the season.</p>
 <p><a href="#sec-the-model" class="quarto-xref">Section&nbsp;1.1</a> has the details, but if the top four hold their form, then a binomial model predicts Liverpool to win the league as shown in <a href="#tbl-2024" class="quarto-xref">Table&nbsp;1</a>.</p>
-<p>In the current season Manchester City with a 63% rate are performing well below their win rate of 76% and draw rate of 11% in the last six seasons.</p>
-<p>Meanwhile Liverpool have a win rate of 66% and draw rate of 21% over the same period which is close their current 65% win rate.</p>
+<p>In the current season Manchester City with 63% and 16% win and draw rates respectively are performing well below average of a win rate of 76% and draw rate of 11% in the last six seasons.</p>
+<p>Meanwhile Liverpool have a win rate of 66% and draw rate of 21% over the same period, close their current 65% win rate. Their draw rate for the current season is above average at 30%</p>
 <p>Assuming there is regression to the mean, I also calculated <a href="#tbl-2024-mean" class="quarto-xref">Table&nbsp;2</a> for their six season mean win rates for Manchester City and Liverpool for the remaining matches. In this scenario Manchester City beat Liverpool by two points.</p>
-<p>Either way, it would be a surprise if Aston Villa won the league. And an even bigger one if Arsenal somehow won.</p>
+<p>I don’t expect these models to stand up well, but they show how fine the margins are. A regression to the mean in draw rate for Liverpool corresponding with a corresponding change for Manchester City is enough to change the outcome.</p>
+<p>It would be a surprise if Aston Villa won the league, an even bigger one if Arsenal somehow won.</p>
+<p>Such are the margins, it would also be surprising if any team ran away with the title, so it should be an exciting second half to the season whatever happens.</p>
 <div class="cell">
 <div id="tbl-2024" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Final predictions for 2023/24 season based on form from first half of the season.
+Table&nbsp;1: Final predictions for 2023/24 season using form from first half of the season.
 </figcaption>
 <div aria-describedby="tbl-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -268,12 +270,13 @@ Table&nbsp;2: Regression to the mean prediction for Manchester City and Liverpoo
 </div>
 <section id="sec-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="sec-the-model">The model</h2>
-<p>I got data for the 2022/23 and 2023/24 seasons from <a href="https://footystats.org/england/premier-league#">Footystats</a></p>
+<p>I got data for the 2023/24 seasons from <a href="https://footystats.org/england/premier-league#">Footystats</a>, and from Wikipedia for <a href="https://en.wikipedia.org/wiki/List_of_Liverpool_F.C._seasons">Liverpool’s seasons</a> and <a href="https://en.wikipedia.org/wiki/List_of_Manchester_City_F.C._seasons">Manchester City’s seasons</a>.</p>
+<p><a href="#tbl-prem-league-2024" class="quarto-xref">Table&nbsp;3</a> shows the statistics for the top four positions on the 2nd of January 2024.</p>
 <div class="cell">
 <div id="tbl-prem-league-2024" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-prem-league-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3: Statistics for top four teams in 2023/24 season on January 10th 2024
+Table&nbsp;3: Statistics for top four teams in 2023/24 season on January 2nd 2024
 </figcaption>
 <div aria-describedby="tbl-prem-league-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -350,15 +353,61 @@ Table&nbsp;3: Statistics for top four teams in 2023/24 season on January 10th 20
 </figure>
 </div>
 </div>
+<p>I used the win and draw percentages for each team and their number of remaining matches to generate binomial distributions of the probability of the total number of wins or draws. In the form <code>dbinom(1:x,x,y)</code> where <code>x</code> is the number of matches and <code>y</code> is the probability of winning or drawing.</p>
+<p><a href="#fig-pred-wins-2024" class="quarto-xref">Figure&nbsp;1</a> shows the distribution for wins and <a href="#fig-pred-draws-2024" class="quarto-xref">Figure&nbsp;2</a> shows the distribution for the draws.</p>
+<p>For a point prediction, I then used the maximum probabilities for wins and draws to calculate the points accrued and subsequent points total for each team for <a href="#tbl-2024" class="quarto-xref">Table&nbsp;1</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-2024" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<div id="fig-pred-wins-2024" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-2024-1.png" class="img-fluid figure-img" width="672">
+<div aria-describedby="fig-pred-wins-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pred-wins-2024-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Binomial model of wins for remaining matches based on form from first half of the season
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pred-wins-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Binomial distribution of wins for remaining matches based on form from first half of the season for the top four teams.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pred-draws-2024" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pred-draws-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pred-draws-2024-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pred-draws-2024-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Binomial distribution of draws for remaining matches based on form from first half of the season for the top four teams.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>I repeated this using the six year win and draw averages for Manchester City and Liverpool which yields <a href="#fig-pred-wins-mean" class="quarto-xref">Figure&nbsp;3</a> and <a href="#fig-pred-draws-mean" class="quarto-xref">Figure&nbsp;4</a> respectively. And <a href="#tbl-2024-mean" class="quarto-xref">Table&nbsp;2</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pred-wins-mean" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pred-wins-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pred-wins-mean-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pred-wins-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Binomial distribution of wins for remaining matches based on a regression to mean form for Liverpool and Manchester City.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pred-draws-mean" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pred-draws-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pred-draws-mean-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pred-draws-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Binomial distribution of draws for remaining matches based on a regression to mean form for Liverpool and Manchester City.
 </figcaption>
 </figure>
 </div>
