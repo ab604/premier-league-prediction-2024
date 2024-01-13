@@ -1,11 +1,11 @@
 project:
   type: website
-  title: "Premier League 2023/23 Predictions"
+  title: "Premier League 2023/24 Predictions"
   output-dir: docs
 
 website: 
   navbar:
-    title: "Premier League 2023/23 Predictions"
+    title: "Premier League 2023/24 Predictions"
     search: false
 
 format:
