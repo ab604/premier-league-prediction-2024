@@ -144,10 +144,10 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="sec-summary" class="level1">
 <h1>Summary</h1>
-<p>At the half-way point in the 2023/24 Premier League season, I was reading the ESPN article <a href="https://www.espn.co.uk/football/insider/insider/story/_/id/39241757/explaining-arsenal-losses-investigation-stats-analysis">What’s wrong at Arsenal?</a>. It’s really good and full complicated analysis using expected goals, heatmaps and the inevitable nod to AI. It ends on Arsenal’s chances of winning the league at 11% on January 5th 2024.</p>
-<p>I’d previously read Oliver Johnson’s Substack on <a href="https://bristoliver.substack.com/p/the-edge-is-everything">New Year’s resolutions</a> which included a binomial model of Ronny O’Sullivan’s frame win and match win rate.</p>
-<p>Just for fun, I wondered how a binomial model would compete with more sophisticated models for predicting the outcome of the second half of the season.</p>
-<p><a href="#sec-the-model" class="quarto-xref">Section&nbsp;1.1</a> has the details, but if the top four hold their form, then a binomial model predicts Liverpool to win the league as shown in <a href="#tbl-2024" class="quarto-xref">Table&nbsp;1</a>.</p>
+<p>At the half-way point in the 2023/24 Premier League season, I was reading the ESPN article <a href="https://www.espn.co.uk/football/insider/insider/story/_/id/39241757/explaining-arsenal-losses-investigation-stats-analysis">What’s wrong at Arsenal?</a>. It’s really good and full of complicated analysis using expected goals, heatmaps and the inevitable nod to AI. It ends on Arsenal’s chances of winning the league at 11% on January 5th 2024.</p>
+<p>I’d previously read Oliver Johnson’s Substack on <a href="https://bristoliver.substack.com/p/the-edge-is-everything">New Year’s resolutions</a> which included a binomial model of Ronny O’Sullivan’s frame win rate.</p>
+<p>Just for fun, I wondered how a binomial model would compete with more sophisticated models for predicting the outcome of the second half of the Premier League season.</p>
+<p><a href="#sec-the-model" class="quarto-xref">Section&nbsp;1.1</a> has more details, but if the top four hold their form, then a simple maximum probability prediction from binomial distributions predicts Liverpool to win the league as shown in <a href="#tbl-2024" class="quarto-xref">Table&nbsp;1</a>.</p>
 <p>In the current season Manchester City with 63% and 16% win and draw rates respectively are performing well below average of a win rate of 76% and draw rate of 11% in the last six seasons.</p>
 <p>Meanwhile Liverpool have a win rate of 66% and draw rate of 21% over the same period, close their current 65% win rate. Their draw rate for the current season is above average at 30%</p>
 <p>Assuming there is regression to the mean, I also calculated <a href="#tbl-2024-mean" class="quarto-xref">Table&nbsp;2</a> for their six season mean win rates for Manchester City and Liverpool for the remaining matches. In this scenario Manchester City beat Liverpool by two points.</p>
@@ -384,7 +384,46 @@ Figure&nbsp;2: Binomial distribution of draws for remaining matches based on for
 </div>
 </div>
 </div>
-<p>I repeated this using the six year win and draw averages for Manchester City and Liverpool which yields <a href="#fig-pred-wins-mean" class="quarto-xref">Figure&nbsp;3</a> and <a href="#fig-pred-draws-mean" class="quarto-xref">Figure&nbsp;4</a> respectively. And <a href="#tbl-2024-mean" class="quarto-xref">Table&nbsp;2</a>.</p>
+<p>I repeated this using the six year win and draw averages for Manchester City and Liverpool (<a href="#tbl-means" class="quarto-xref">Table&nbsp;4</a>) which yields <a href="#fig-pred-wins-mean" class="quarto-xref">Figure&nbsp;3</a> and <a href="#fig-pred-draws-mean" class="quarto-xref">Figure&nbsp;4</a> respectively. And <a href="#tbl-2024-mean" class="quarto-xref">Table&nbsp;2</a>.</p>
+<div class="cell">
+<div id="tbl-means" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Six year Premier League averages for Manchester City and Liverpool
+</figcaption>
+<div aria-describedby="tbl-means-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">club</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prct_win</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prct_draw</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">prct_loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Man_City</td>
+<td style="text-align: right;">0.763</td>
+<td style="text-align: right;">0.110</td>
+<td style="text-align: right;">0.127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Liverpool</td>
+<td style="text-align: right;">0.658</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.127</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-pred-wins-mean" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">

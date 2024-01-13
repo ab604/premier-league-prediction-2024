@@ -166,11 +166,11 @@ tbl_mc_2024 <- mc_liv |> mutate(pred_wins = pred_mc_wins,
 
 At the half-way point in the 2023/24 Premier League season, I was reading the ESPN article [What's wrong at Arsenal?](https://www.espn.co.uk/football/insider/insider/story/_/id/39241757/explaining-arsenal-losses-investigation-stats-analysis). It's really good and full of complicated analysis using expected goals, heatmaps and the inevitable nod to AI. It ends on Arsenal's chances of winning the league at 11% on January 5th 2024.
 
-I'd previously read Oliver Johnson's Substack on [New Year's resolutions](https://bristoliver.substack.com/p/the-edge-is-everything) which included a binomial model of Ronny O'Sullivan's frame win and match win rate.
+I'd previously read Oliver Johnson's Substack on [New Year's resolutions](https://bristoliver.substack.com/p/the-edge-is-everything) which included a binomial model of Ronny O'Sullivan's frame win rate.
 
-Just for fun, I wondered how a binomial model would compete with more sophisticated models for predicting the outcome of the second half of the season.
+Just for fun, I wondered how a binomial model would compete with more sophisticated models for predicting the outcome of the second half of the Premier League season.
 
-@sec-the-model has the details, but if the top four hold their form, then a binomial model predicts Liverpool to win the league as shown in @tbl-2024.
+@sec-the-model has more details, but if the top four hold their form, then a simple maximum probability prediction from binomial distributions predicts Liverpool to win the league as shown in @tbl-2024.
 
 In the current season Manchester City with 63% and 16% win and draw rates respectively are performing well below average of a win rate of `r round(100*(174/228),0)`% and draw rate of `r round(100*(25/228),0)`% in the last six seasons.
 
@@ -232,7 +232,15 @@ plt_2024
 plt_draws
 ```
 
-I repeated this using the six year win and draw averages for Manchester City and Liverpool which yields @fig-pred-wins-mean and @fig-pred-draws-mean respectively. And @tbl-2024-mean.
+I repeated this using the six year win and draw averages for Manchester City and Liverpool (@tbl-means) which yields @fig-pred-wins-mean and @fig-pred-draws-mean respectively. And @tbl-2024-mean.
+
+```{r}
+#| label: tbl-means
+#| tbl-cap: Six year Premier League averages for Manchester City and Liverpool
+mc_liv |> mutate(prct_loss = 1-(prct_win+prct_draw)) |> 
+  select(club, prct_win, prct_draw, prct_loss) |> 
+  kable(digits = 3) |> kable_styling("striped")
+```
 
 ```{r}
 #| label: fig-pred-wins-mean
