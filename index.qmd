@@ -165,7 +165,7 @@ t4_tbl |> select(Club = club, Matches = matches,
 
 ```{r}
 #| label: tbl-2024-mean
-#| tbl-cap: Final predictions for 2023/24 season if Manchester City return to their long term form and the other clubs continue as the first half of the season.
+#| tbl-cap: Regression to the mean prediction for Manchester City and Liverpool for 2023/24.
 tbl_mc_2024 |> select(Club = club, Matches = matches,
                    "Pred. Wins" = pred_wins, "Pred. Draws" = pred_draws, "Pred. Losses" = pred_loss,
                    "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
