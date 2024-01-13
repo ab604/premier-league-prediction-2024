@@ -182,7 +182,7 @@ I don't expect these models to stand up well, but they show how fine the margins
 
 It would be a surprise if Aston Villa won the league, an even bigger one if Arsenal somehow won.
 
-Such are the margins, it would also be surprising if any team ran away with the title, so it should be an exciting second half to the season whatever happens. 
+It would also be surprising if any team ran away with the title, so it should be an exciting second half to the season whatever happens. 
 
 ```{r}
 #| label: tbl-2024
