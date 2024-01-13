@@ -1,5 +1,6 @@
 project:
   type: website
+  title: "Premier League 2023/23 Predictions"
   output-dir: docs
 
 website: 
