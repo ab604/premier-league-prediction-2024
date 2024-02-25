@@ -221,8 +221,8 @@ It would also be surprising if any team ran away with the title, so it should be
 #| label: tbl-2024
 #| tbl-cap: Final predictions for 2023/24 season using form from first half of the season.
 t4_tbl |> select(Club = club, Matches = total_matches,
-                   "Pred. Wins" = total_wins, "Pred. Draws" = total_draws, "Pred. Lost" = total_lost,
-                   "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
+                   "Predicted Wins" = total_wins, "Predicted Draws" = total_draws, "Predicted Lost" = total_lost,
+                   "Predicted Points Total" = pred_total) |> 
   kable(digits = 3) |> kable_styling("striped")
 ```
 
@@ -230,8 +230,8 @@ t4_tbl |> select(Club = club, Matches = total_matches,
 #| label: tbl-2024-mean
 #| tbl-cap: Regression to the mean prediction for Manchester City and Liverpool for 2023/24.
 tbl_mc_2024 |> select(Club = club, Matches = total_matches,
-                   "Pred. Wins" = total_wins, "Pred. Draws" = total_draws, "Pred. Lost" = total_lost,
-                   "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
+                   "Predicted Wins" = total_wins, "Predicted Draws" = total_draws, "Predicted Lost" = total_lost,
+                    "Predicted Points Total" = pred_total) |> 
   kable(digits = 3) |> kable_styling("striped")
 ```
 
