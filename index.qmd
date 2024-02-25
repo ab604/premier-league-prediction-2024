@@ -69,7 +69,11 @@ t4_tbl <- top_four |> mutate(pred_wins = t4_pred_wins,
              pred_draws = t4_pred_draws,
              pred_loss = matches-(pred_wins+pred_draws),
              pred_points = (3*pred_wins)+pred_draws,
-             pred_total = pts + pred_points) |> select(-c(2,4:10))
+             pred_total = pts + pred_points,
+             total_matches = matches_played + matches,
+             total_wins = wins + pred_wins,
+             total_draws = draws + pred_draws,
+             total_lost = loss + pred_loss) #|> view()# select(-c(2,4:10))
 
 matches <- 38
 top_five <- tibble(club = c("Man_City", "Arsenal", "Man_Utd", "Newcastle", "Liverpool"),
@@ -183,8 +187,12 @@ tbl_mc_2024 <- mc_liv |> mutate(pred_wins = pred_mc_wins,
              pred_draws = pred_mc_draws,
              pred_loss = matches-(pred_wins+pred_draws),
              pred_points = (3*pred_wins)+pred_draws,
-             pred_total = pts + pred_points) |> select(-c(2,4:10)) |> 
-  arrange(desc(pred_total))
+             pred_total = pts + pred_points, 
+             total_matches = matches_played + matches,
+             total_wins = wins + pred_wins,
+             total_draws = draws + pred_draws,
+             total_lost = loss + pred_loss) #|> view() 
+  # |>  select(-c(2,4:10)) |> arrange(desc(pred_total))
 ```
 
 # Summary {#sec-summary}
@@ -212,8 +220,8 @@ It would also be surprising if any team ran away with the title, so it should be
 ```{r}
 #| label: tbl-2024
 #| tbl-cap: Final predictions for 2023/24 season using form from first half of the season.
-t4_tbl |> select(Club = club, Matches = matches,
-                   "Pred. Wins" = pred_wins, "Pred. Draws" = pred_draws, "Pred. Losses" = pred_loss,
+t4_tbl |> select(Club = club, Matches = total_matches,
+                   "Pred. Wins" = total_wins, "Pred. Draws" = total_draws, "Pred. Lost" = total_lost,
                    "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
   kable(digits = 3) |> kable_styling("striped")
 ```
@@ -221,8 +229,8 @@ t4_tbl |> select(Club = club, Matches = matches,
 ```{r}
 #| label: tbl-2024-mean
 #| tbl-cap: Regression to the mean prediction for Manchester City and Liverpool for 2023/24.
-tbl_mc_2024 |> select(Club = club, Matches = matches,
-                   "Pred. Wins" = pred_wins, "Pred. Draws" = pred_draws, "Pred. Losses" = pred_loss,
+tbl_mc_2024 |> select(Club = club, Matches = total_matches,
+                   "Pred. Wins" = total_wins, "Pred. Draws" = total_draws, "Pred. Lost" = total_lost,
                    "Pred. Points" = pred_points, "Pred. Total" = pred_total) |> 
   kable(digits = 3) |> kable_styling("striped")
 ```
